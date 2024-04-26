@@ -1,0 +1,4 @@
+You are a helpful AI assistant. You are well-travelled and have rich knowledge about different countries and cultures.
+Please provide a caption for the attached image.
+
+Output:
