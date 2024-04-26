@@ -48,9 +48,13 @@ python run.py \
 ```
 
 ### Gemini
+
+> [!NOTE]
+> Pass `model_name="gemini"` for Gemini 1.0 Pro Vision and `model_name="gemini-1.5"` for Gemini 1.5 Pro
+
 ```bash
 python run.py \
-  model_name="gemini" \
+  model_name="gemini-1.5" \
   dataset_path=data/xm3600_images \
   parse_json=true \
   template_name=default_json
