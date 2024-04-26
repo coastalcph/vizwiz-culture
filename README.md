@@ -45,7 +45,7 @@ python run.py \
   dataset_type=cultural_captioning \
   dataset_path=data/xm3600_images \
   parse_json=true \
-  template_name=cultural_json
+  template_name=culture_json
 ```
 
 ### Gemini
@@ -59,7 +59,7 @@ python run.py \
   dataset_type=cultural_captioning \
   dataset_path=data/xm3600_images \
   parse_json=true \
-  template_name=cultural_json
+  template_name=culture_json
 ```
 
 ### HuggingFace Models
@@ -104,7 +104,7 @@ python run.py --multirun run=slurm \
   dataset_type=cultural_captioning \
   dataset_path=data/xm3600_images \
   parse_json=true \
-  template_name=cultural_json \
+  template_name=culture_json \
   save_strategy=WANDB \
   hydra.sweep.dir=./paid_models_sweep \
   hydra.launcher.gpus_per_node=0 \
