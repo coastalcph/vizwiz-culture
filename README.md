@@ -105,3 +105,12 @@ python run.py --multirun run=slurm \
   hydra.launcher.mem_gb=4
 ```
 
+## Data
+
+### XM3600
+
+Download the images to a folder named `xm3600_images` like this:
+```bash
+mkdir -p xm3600_images
+wget -O - https://open-images-dataset.s3.amazonaws.com/crossmodal-3600/images.tgz | tar -xvzf - -C xm3600_images
+```
