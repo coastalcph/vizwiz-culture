@@ -418,6 +418,7 @@ class HFApiConfig:
 MODEL_CONFIGS = {
     "gpt-4": OpenaiApiConfig(),
     "gemini": GoogleApiConfig(),
+    "gemini-1.5": GoogleApiConfig(model_id="gemini-1.5-pro-preview-0409"),
     "blip2": HFApiConfig(
         model_id="Salesforce/blip2-opt-{model_size}",
         model_cls=partial(
