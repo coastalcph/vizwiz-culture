@@ -71,9 +71,18 @@ class ImageCaptioningDataset(Dataset):
         return {"data": example, "img": img, "prompts": prompts}
 
 
+class CulturalImageCaptioningDataset(ImageCaptioningDataset):
+    json_expected_keys = ["cultural_information", "justification", "caption"]
+    name = "cultural_image_captioning"
+
+    def json_parsing_fallback_fn(self, response: str) -> Dict[str, str]:
+        return {"cultural_information": False, "justification": "", "caption": response}
+
 def get_dataset(config: DictConfig) -> Dataset:
     if config.dataset_type == "captioning":
         dataset_cls = ImageCaptioningDataset
+    if config.dataset_type == "cultural_captioning":
+        dataset_cls = CulturalImageCaptioningDataset
     else:
         raise NotImplementedError(f"Dataset type {config.dataset_type} not implemented.")
 
