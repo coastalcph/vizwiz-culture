@@ -148,6 +148,7 @@ class Wrapper(ABC):
             logger.info(f"Saved outputs to `{output_filepath}`")
 
         elif self.config.save_strategy == SaveStrategy.WANDB:
+            df["image"] = df["image_path"].apply(lambda x: wandb.Image(x) if x else None)
             wandb.init(
                 project=dataset_name,
                 name=f"{os.path.basename(self.resolved_model_id)}_{dataset_name}_{self.config.template_name}_{self.curr_time}",
