@@ -1,0 +1,35 @@
+# @package _global_
+
+defaults:
+  - override /hydra/launcher: submitit_slurm
+
+hydra:
+  verbose: false
+  launcher:
+    _target_: hydra_plugins.hydra_submitit_launcher.submitit_launcher.SlurmLauncher
+    cpus_per_task: 24
+    gpus_per_node: 1
+    tasks_per_node: 1
+    nodes: 1
+    comment: null
+    mem_gb: 64
+    timeout_min: 1440
+    max_num_timeout: 100
+    partition: gpu 
+    name: ${hydra.job.override_dirname}
+    submitit_folder: ${hydra.sweep.dir}/submitit/%j
+    array_parallelism: 16
+    setup: [
+      "conda activate vizwiz-culture"
+    ]
+  sweep:
+    dir: ${oc.env:PWD}/sweeps
+    subdir: ${hydra.job.override_dirname}
+  job:
+    config:
+      override_dirname:
+        kv_sep: '.'
+        item_sep: '.'
+        exclude_keys:
+          - run
+          - hydra

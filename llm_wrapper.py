@@ -16,20 +16,32 @@ import openai
 import pandas as pd
 import torch
 import vertexai
-import wandb
 from omegaconf import DictConfig, OmegaConf
 from PIL import Image
 from tqdm import tqdm
 from transformers import (AutoModelForCausalLM, AutoProcessor,
                           Blip2ForConditionalGeneration, Blip2Processor,
                           InstructBlipForConditionalGeneration,
-                          InstructBlipProcessor)
+                          InstructBlipProcessor,
+                          LlavaNextForConditionalGeneration,
+                          LlavaNextProcessor)
 from vertexai.preview.generative_models import (GenerationConfig,
                                                 GenerativeModel, Part)
 
+import wandb
 from dataset import Dataset, Example
 
 logger = logging.getLogger(__name__)
+
+
+def is_flashattn_2_supported():
+    try:
+        import flash_attn_2_cuda
+
+        return True
+    except ImportError:
+        logger.warning("Flash attention 2 is not supported")
+        return False
 
 
 class SaveStrategy(Enum):
@@ -64,7 +76,7 @@ class ModelOutput:
 
 def parse_response_as_json(response: str, expected_keys: List[str], fallback_fn: Callable):
     # Try to force response into JSON format
-    response = response.replace("```", "").strip()
+    response = response.replace("```", "").replace("json", "").strip()
     if "}" in response:
         response = response.split("}")[0] + "}"
     if not response.endswith("}"):
@@ -92,13 +104,12 @@ class Wrapper(ABC):
         self,
         example: Dict[str, Union[Example, List[str]]],
         json_kwargs: Optional[Dict[str, Any]] = None,
-    ) -> ModelOutput:
-        ...
+    ) -> ModelOutput: ...
 
     def get_completion(
         self, prompt: str, response: str, json_kwargs: Optional[Dict[str, Any]] = None
     ) -> Completion:
-        logger.info(f"{'-' * 100}\nPrompt: {prompt}")
+        logger.info(f"{'-' * 100}\n{prompt}")
         if self.config.parse_json:
             assert json_kwargs is not None
             response = parse_response_as_json(
@@ -122,6 +133,8 @@ class Wrapper(ABC):
 
         # Convert to dataframe
         df = pd.DataFrame(all_outputs, columns=columns)
+
+        logger.info(f"{df.head()}\n{'-' * 100}")
 
         # Save
         if self.config.save_strategy == SaveStrategy.LOCAL:
@@ -293,6 +306,8 @@ class HfWrapper(Wrapper):
             pretrained_model_name_or_path=self.resolved_model_id,
             torch_dtype=self.model_config.dtype,
         )
+        self.model.to("cuda" if torch.cuda.is_available() else "cpu")
+
         self.processor = self.model_config.processor_cls(
             pretrained_model_name_or_path=self.resolved_model_id
         )
@@ -315,7 +330,7 @@ class HfWrapper(Wrapper):
             generated_text = ""
             iteration = 0
             while not generated_text.strip():
-                if iteration % 5 == 0:
+                if (iteration + 1) % 5 == 0:
                     logger.info(f"Retrying prompt after {iteration} iterations")
 
                 # Generate
@@ -323,6 +338,9 @@ class HfWrapper(Wrapper):
                     **prompt,
                     **self.model_config.generation_kwargs,
                 )
+                if self.model_config.strip_prompt:
+                    generated_tokens = generated_tokens[:, prompt.input_ids.shape[1] :]
+
                 generated_tokens = generated_tokens.cpu()
 
                 # Decode
@@ -390,10 +408,11 @@ class HFApiConfig:
     )
     dtype: torch.dtype = torch.float16
     default_model_size: str = "2.7b"
-    model_cls: Callable = partial(AutoModelForCausalLM.from_pretrained, device_map="auto")
+    model_cls: Callable = AutoModelForCausalLM.from_pretrained
     processor_cls: Callable = partial(AutoProcessor.from_pretrained, use_fast=True)
     api_type: ApiType = ApiType.HF
     wrapper_cls: Wrapper = HfWrapper
+    strip_prompt: bool = False
 
 
 MODEL_CONFIGS = {
@@ -403,7 +422,6 @@ MODEL_CONFIGS = {
         model_id="Salesforce/blip2-opt-{model_size}",
         model_cls=partial(
             Blip2ForConditionalGeneration.from_pretrained,
-            device_map="auto",
         ),
         processor_cls=partial(Blip2Processor.from_pretrained, use_fast=True),
         default_model_size="2.7b",
@@ -412,10 +430,20 @@ MODEL_CONFIGS = {
         model_id="Salesforce/instructblip-vicuna-{model_size}",
         model_cls=partial(
             InstructBlipForConditionalGeneration.from_pretrained,
-            device_map="auto",
         ),
         processor_cls=partial(InstructBlipProcessor.from_pretrained, use_fast=True),
         default_model_size="7b",
+    ),
+    "llava-v1.6": HFApiConfig(
+        model_id="llava-hf/llava-v1.6-{model_size}-hf",
+        model_cls=partial(
+            LlavaNextForConditionalGeneration.from_pretrained,
+            low_cpu_mem_usage=True,
+            use_flash_attention_2=is_flashattn_2_supported(),
+        ),
+        processor_cls=LlavaNextProcessor.from_pretrained,
+        default_model_size="mistral-7b",
+        strip_prompt=True,
     ),
 }
 

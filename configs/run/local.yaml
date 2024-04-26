@@ -1,0 +1,14 @@
+# @package _global_
+
+hydra:
+  sweep:
+    dir: ${oc.env:PWD}/debug
+    subdir: ${hydra.job.override_dirname}
+  job:
+    config:
+      override_dirname:
+        kv_sep: '.'
+        item_sep: '.'
+        exclude_keys:
+          - run
+          - hydra

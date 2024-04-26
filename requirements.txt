@@ -1,0 +1,12 @@
+accelerate
+hydra-core
+hydra-submitit-launcher
+jinja2
+openai
+pandas
+pillow
+sentencepiece
+torch
+transformers
+vertexai
+wandb

@@ -16,17 +16,17 @@ class RunConfig:
         default=MISSING,
         metadata={"help": "The name of the model to use. Must be a key in MODEL_CONFIGS."},
     )
-    dataset_name: str = field(
-        default=MISSING,
-        metadata={"help": "The name of the dataset to use. Options are 'captioning'."},
-    )
     dataset_path: str = field(
         default=MISSING,
-        metadata={"help": "The path to the dataset to use. Should be a CSV file."},
+        metadata={"help": "The path to the dataset to use. Should be a folder containing images."},
+    )
+    dataset_type: str = field(
+        default="captioning",
+        metadata={"help": "The type of the dataset to use. Options are 'captioning'."},
     )
     template_name: str = field(
-        default="default_template",
-        metadata={"help": "Name of the tempalte to use for the prompt."},
+        default="default",
+        metadata={"help": "Name of the template to use for the prompt."},
     )
     parse_json: bool = field(
         default=False,
@@ -57,7 +57,7 @@ cs = ConfigStore.instance()
 cs.store(name="base_config", node=RunConfig)
 
 
-@hydra.main(version_base=None, config_name="base_config")
+@hydra.main(version_base=None, config_path="configs", config_name="config")
 def main(config: DictConfig):
     OmegaConf.resolve(config)
 

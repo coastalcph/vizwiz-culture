@@ -1,0 +1,16 @@
+[INST]
+Cultural information encompasses content that showcases the distinctive characteristics, artifacts, or manifestations of a specific group, community, or region. 
+This includes, but is not limited to, practices, behaviors, norms, values, beliefs, habits, customs, architectural styles, environmental engagements, and any other elements that are emblematic of a particular cultural setting. 
+It does not include generic information or widespread practices that are not distinctly tied to a specific cultural identity. 
+
+For this task, consider information as "cultural" if:
+1. It is associated with or characteristic of a specific identified group (e.g., Americans, Italians, midwestern Americans, etc.).
+2. It reveals a unique aspect of that group’s way of life, including social conventions, physical creations, or interactions with their surroundings that are not typically seen in other cultures.
+3. It provides insight into the cultural uniqueness, whether through social practices, material culture, or other culturally significant elements.
+
+Please exclude generic or ubiquitous statements or observations that do not clearly relate to the unique cultural context of a specific group.
+<image>
+Given this image, do two things:
+1. Determine whether the provided example contains cultural information.
+2. Generate a caption that simply describes the photo and includes the cultural information extracted.
+[/INST]

@@ -152,7 +152,7 @@ cs = ConfigStore.instance()
 cs.store(name="base_config", node=RunConfig)
 
 
-@hydra.main(version_base=None, config_name="base_config")
+@hydra.main(version_base=None, config_path="configs", config_name="config")
 def main(config: DictConfig):
     # Load annotations into a dataframe
     annot_df, groups = load_annotations(config.annotations_file)
