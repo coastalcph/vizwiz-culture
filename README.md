@@ -42,9 +42,10 @@ python -c "import torch; import flash_attn_2_cuda"
 ```bash
 python run.py \
   model_name="gpt-4" \
+  dataset_type=cultural_captioning \
   dataset_path=data/xm3600_images \
   parse_json=true \
-  template_name=default_json
+  template_name=cultural_json
 ```
 
 ### Gemini
@@ -55,9 +56,10 @@ python run.py \
 ```bash
 python run.py \
   model_name="gemini-1.5" \
+  dataset_type=cultural_captioning \
   dataset_path=data/xm3600_images \
   parse_json=true \
-  template_name=default_json
+  template_name=cultural_json
 ```
 
 ### HuggingFace Models
@@ -99,9 +101,10 @@ Example:
 ```bash
 python run.py --multirun run=slurm \
   model_name=gemini,gpt-4 \
+  dataset_type=cultural_captioning \
   dataset_path=data/xm3600_images \
   parse_json=true \
-  template_name=default_json \
+  template_name=cultural_json \
   save_strategy=WANDB \
   hydra.sweep.dir=./paid_models_sweep \
   hydra.launcher.gpus_per_node=0 \
