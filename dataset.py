@@ -50,7 +50,7 @@ class ImageCaptioningDataset(Dataset):
     def _load_dataset(self, data_dir: Path) -> None:
         self.data = [
             ImageCaptioningExample(str(image_path)) for image_path in data_dir.rglob("*.jpg")
-        ][:10]
+        ]
         logger.info(f"Resolved {len(self.data)} images in directory `{data_dir}`.")
 
     def _load_template(self, template_path: Path) -> None:
