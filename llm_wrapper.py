@@ -209,7 +209,7 @@ class OpenaiWrapper(Wrapper):
                                 "content": [
                                     {"type": "text", "text": prompt_text},
                                     {
-                                        "type": "image",
+                                        "type": "image_url",
                                         "image_url": {
                                             "url": f"data:image/jpeg;base64,{base64_image}",
                                             "detail": "auto",
@@ -417,6 +417,7 @@ class HFApiConfig:
 
 MODEL_CONFIGS = {
     "gpt-4": OpenaiApiConfig(),
+    "gpt-4-turbo": OpenaiApiConfig(model_id="gpt-4-turbo-2024-04-09"),
     "gemini": GoogleApiConfig(),
     "gemini-1.5": GoogleApiConfig(model_id="gemini-1.5-pro-preview-0409"),
     "blip2": HFApiConfig(

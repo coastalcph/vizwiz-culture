@@ -39,9 +39,13 @@ python -c "import torch; import flash_attn_2_cuda"
 ## Examples
 
 ### GPT-4V
+
+> [!NOTE]
+> Pass `model_name="gpt-4"` for GPT-4V (gpt-4-1106-vision-preview) and `model_name="gpt-4-turbo"` for GPT-4 Turbo with Vision (gpt-4-turbo-2024-04-09)
+
 ```bash
 python run.py \
-  model_name="gpt-4" \
+  model_name="gpt-4-turbo" \
   dataset_type=cultural_captioning \
   dataset_path=data/xm3600_images \
   parse_json=true \
