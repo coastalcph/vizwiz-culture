@@ -70,7 +70,7 @@ cs.store(
 # HuggingFace models
 cs.store(
     group="model",
-    name="blip-2",
+    name="blip2",
     node=HfModelConfig(
         name=f"Salesforce/blip2-opt-{II('model.size')}",
         size="6.7b",
