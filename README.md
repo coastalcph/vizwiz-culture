@@ -6,7 +6,7 @@
 ```bash
 conda create -n vizwiz-culture python=3.10
 conda activate vizwiz-culture
-pip install -r requirements.txt
+pip install -e .
 ```
 
 2. (Optional) Install flash-attention
@@ -38,33 +38,48 @@ python -c "import torch; import flash_attn_2_cuda"
 
 ## Examples
 
+### General Usage
+
+### Registering models
+
+You can register new models, datasets, and callbacks by adding them under [src/vlm_inference/configuration/registry.py](src/vlm_inference/configuration/registry.py). We currently support the Google Gemini API, the OpenAI API and HuggingFace.
+
+#### Callbacks
+
+We currently use callbacks for logging, local saving of outputs, and uploading to Wandb.
+
+You can get rid of default callbacks via `~_callback_dict.<callback_name>`, e.g. remove the Wandb callback via `'~_callback_dict.wandb'`.
+
+You can also easily override values of the callbacks, e.g. `_callback_dict.wandb.project=new-project`.
+
 ### GPT-4V
 
 > [!NOTE]
-> Pass `model_name="gpt-4"` for GPT-4V (gpt-4-1106-vision-preview) and `model_name="gpt-4-turbo"` for GPT-4 Turbo with Vision (gpt-4-turbo-2024-04-09)
+> Pass `model="gpt-4"` for GPT-4V (gpt-4-1106-vision-preview) and `model="gpt-4-turbo"` for GPT-4 Turbo with Vision (gpt-4-turbo-2024-04-09)
 
 ```bash
 python run.py \
-  model_name="gpt-4-turbo" \
-  dataset_type=cultural_captioning \
-  dataset_path=data/xm3600_images \
-  parse_json=true \
-  template_name=culture_json
+  model="gpt-4-turbo" \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=culture_json
 ```
 
 ### Gemini
 
 > [!NOTE]
-> Pass `model_name="gemini"` for Gemini 1.0 Pro Vision and `model_name="gemini-1.5"` for Gemini 1.5 Pro
+> Pass `model="gemini-1.0"` for Gemini 1.0 Pro Vision and `model="gemini-1.5"` for Gemini 1.5 Pro
 
 ```bash
 python run.py \
-  model_name="gemini-1.5" \
-  dataset_type=cultural_captioning \
-  dataset_path=data/xm3600_images \
-  parse_json=true \
-  template_name=culture_json
+  model="gemini-1.5" \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=culture_json
 ```
+
 
 ### HuggingFace Models
 
@@ -72,22 +87,21 @@ python run.py \
 
 ```bash
 python run.py \
-  model_name="instructblip" \
-  dataset_path=data/xm3600_images \
-  parse_json=true \
-  template_name=default_json \
-  save_path=outputs/instructblip_outputs
+  model="instructblip" \
+  model.json_mode=true \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=default_json
 ```
 
 #### LLaVa-1.6 (w/ culture template and wandb logging)
 
 ```bash
-export WANDB_API_KEY=<your_key>
 python run.py \
-  model_name="llava-v1.6" \
-  dataset_path=data/xm3600_images \
-  template_name=llava7b_culture \
-  save_strategy=WANDB
+  model="llava" \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=llava7b_culture_json
 ```
 
 ### Running on SLURM
@@ -98,19 +112,18 @@ Pass `--multirun run=slurm` to run on SLURM.
 > You might need to adjust the Slurm parameters (see defaults in [configs/run/slurm.yaml](configs/run/slurm.yaml)).
 > To do so, either change them directly in the `slurm.yaml`, create a new `yaml` file, or pass them as hydra overrides, e.g. via `hydra.launcher.partition=gpu` or `hydra.launcher.gpus_per_node=0`.
 
-You can launch different configurations in parallel using comma-separated arguments, e.g. `model_name=gemini,gpt-4`.
+You can launch different configurations in parallel using comma-separated arguments, e.g. `model=gemini-1.0,gpt-4`.
 
 Example: 
 
 ```bash
 python run.py --multirun run=slurm \
-  model_name=gemini,gpt-4 \
-  dataset_type=cultural_captioning \
-  dataset_path=data/xm3600_images \
-  parse_json=true \
-  template_name=culture_json \
-  save_strategy=WANDB \
-  hydra.sweep.dir=./paid_models_sweep \
+  model=gemini-1.0,gpt-4 \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=culture_json \
+  hydra.sweep.dir=./closed_models_sweep \
   hydra.launcher.gpus_per_node=0 \
   hydra.launcher.cpus_per_task=4 \
   hydra.launcher.mem_gb=4

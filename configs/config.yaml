@@ -1,5 +1,18 @@
 # @package _global_
 
 defaults:
-  - run: local
   - base_config
+  - run: local
+  - dataset: captioning
+  - model: base_model
+  - callbacks@_callback_dict.logging: logging
+  - callbacks@_callback_dict.csv: csv
+  - callbacks@_callback_dict.wandb: wandb
+
+_callback_dict:
+  csv:
+    file_path: ${model.name}-outputs.csv
+  wandb:
+    project: vizwiz-culture
+
+callbacks: ${oc.dict.values:_callback_dict}

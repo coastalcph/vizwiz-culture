@@ -3,8 +3,11 @@ hydra-core
 hydra-submitit-launcher
 jinja2
 openai
+outlines<0.0.39
 pandas
 pillow
+pydantic
+randomname
 sentencepiece
 torch
 transformers

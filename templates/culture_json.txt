@@ -14,8 +14,4 @@ Given this image, do two things:
 2. Generate a caption that simply describes the photo and includes the cultural information extracted.
 
 Format your response in JSON as follows:
-{
-  "cultural_information": true/false,
-  "justification": "Justification for why the example contains/does not contain cultural information.",
-  "caption": "Your generated caption here."
-}
+{{ json_schema }}

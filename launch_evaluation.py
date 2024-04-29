@@ -6,11 +6,12 @@ from typing import Any, Dict, List, Tuple
 
 import hydra
 import pandas as pd
-from eval.coco import COCO
-from eval.eval import COCOEvalCap
 from hydra.core.config_store import ConfigStore
 from omegaconf import DictConfig
 from tqdm import tqdm
+
+from eval.coco import COCO
+from eval.eval import COCOEvalCap
 
 
 def load_preds_from_csv(predictions_csv_file: str) -> List[Dict[str, str]]:
