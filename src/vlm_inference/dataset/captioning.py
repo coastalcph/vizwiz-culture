@@ -43,7 +43,7 @@ class ImageCaptioningDataset(BaseDataset):
         if not data_dir.exists() and not data_dir.is_dir():
             raise FileNotFoundError(f"Directory `{data_dir}` does not exist.")
 
-        self.data = [str(image_path.resolve()) for image_path in data_dir.rglob("*.jpg")][:10]
+        self.data = [str(image_path.resolve()) for image_path in data_dir.rglob("*.jpg")]
         logger.info(f"Resolved {len(self.data)} images in directory `{data_dir}`.")
 
     def _load_template(self, template_name: str) -> None:
