@@ -83,7 +83,7 @@ python run.py \
 
 ### HuggingFace Models
 
-#### InstructBLIP (w/ non-JSON continuation template)
+#### InstructBLIP (w/ non-JSON continuation template and regular captioning)
 
 ```bash
 python run.py \
@@ -93,7 +93,7 @@ python run.py \
   dataset.template_name=continuation
 ```
 
-#### LLaVa-1.6 (w/ culture template and wandb logging)
+#### LLaVa-1.6 (w/ JSON culture template and cultural captioning)
 
 ```bash
 python run.py \
