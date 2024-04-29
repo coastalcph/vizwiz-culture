@@ -83,7 +83,7 @@ python run.py \
 ### Claude
 
 > [!NOTE]
-> Available options are `model="claude-haiku"`, `model="claude-sonnet"`, or `model="claude-opus"`.
+> Currently available options are `model="claude-haiku"`, `model="claude-sonnet"`, and `model="claude-opus"`
 
 ```bash
 python run.py \
@@ -96,6 +96,12 @@ python run.py \
 
 
 ### HuggingFace Models
+
+> [!NOTE]
+> Currently available options are `model="blip2"`, `model="instructblip"`, `model="llava"`, and `model="idefics2"`
+> You can also specify the size, e.g. `model.size=34b` for Llava
+> Make sure to use a prompt template that works for the model (uses the correct special tokens, etc.)
+
 
 #### InstructBLIP (w/ non-JSON continuation template and regular captioning)
 
@@ -116,6 +122,17 @@ python run.py \
   dataset=cultural_captioning \
   dataset.path=data/xm3600_images \
   dataset.template_name=llava7b_culture_json
+```
+
+#### Idefics2
+
+```bash
+python run.py \
+  model="idefics2" \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=idefics2_culture_json
 ```
 
 ### Running on SLURM

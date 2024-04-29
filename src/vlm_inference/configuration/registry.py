@@ -110,6 +110,23 @@ cs.store(
     ),
 )
 
+cs.store(
+    group="model",
+    name="idefics2",
+    node=HfModelConfig(
+        name=f"HuggingFaceM4/idefics2-{II('model.size')}",
+        size="8b",
+        dtype="float16",
+        model_cls=HfModel(
+            _target_="transformers.AutoModelForVision2Seq.from_pretrained",
+            attn_implementation="flash_attention_2" if is_flashattn_2_supported() else "sdpa",
+        ),
+        processor_cls=HfProcessor(_target_="transformers.AutoProcessor.from_pretrained"),
+        strip_prompt=True,
+    ),
+)
+
+
 # Callbacks
 cs.store(group="callbacks", name="logging", node=LoggingCallbackConfig)
 cs.store(group="callbacks", name="csv", node=SaveToCsvCallbackConfig)

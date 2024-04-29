@@ -27,7 +27,7 @@ class GoogleModelConfig(ModelConfig):
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
             "max_output_tokens": 300,
-            "temperature": 0.4,
+            "temperature": 0.5,
             "max_retries": 50,
             "sleep_duration": 2,
         }
@@ -41,7 +41,7 @@ class OpenaiModelConfig(ModelConfig):
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
             "max_tokens": 300,
-            "temperature": 1.0,
+            "temperature": 0.5,
             "max_retries": 50,
             "sleep_duration": 2,
         }
@@ -55,7 +55,7 @@ class AnthropicModelConfig(ModelConfig):
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
             "max_tokens": 300,
-            "temperature": 1.0,
+            "temperature": 0.5,
             "max_retries": 50,
             "sleep_duration": 2,
         }
@@ -84,7 +84,7 @@ class HfModelConfig(ModelConfig):
             "num_return_sequences": 1,
             "do_sample": True,
             "max_new_tokens": 300,
-            "temperature": 1.0,
+            "temperature": 0.5,
             "top_k": 50,
             "max_retries": 10,
         }
