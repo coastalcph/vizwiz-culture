@@ -13,6 +13,7 @@ setup(
     python_requires=">=3.10",
     install_requires=[
         "accelerate",
+        "anthropic",
         "hydra-core",
         "hydra-submitit-launcher",
         "openai",
