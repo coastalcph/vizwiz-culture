@@ -102,7 +102,7 @@ class BaseEngine(ABC):
             logger.warning(f"Failed to generate text after {self.gen_max_retries} iterations")
             return StringCompletion(example=example, response="")
 
-        logger.info(f"Generated JSON after {retry + 1} iterations")
+        logger.info(f"Generated text after {retry + 1} iterations")
 
         return StringCompletion(example=example, response=generated_text)
 
