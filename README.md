@@ -48,7 +48,7 @@ You can register new models, datasets, and callbacks by adding them under [src/v
 
 We currently use callbacks for logging, local saving of outputs, and uploading to Wandb.
 
-You can get rid of default callbacks via `~_callback_dict.<callback_name>`, e.g. remove the Wandb callback via `'~_callback_dict.wandb'`.
+You can get rid of default callbacks via `'~_callback_dict.<callback_name>'`, e.g. remove the Wandb callback via `'~_callback_dict.wandb'` (mind the quotation marks).
 
 You can also easily override values of the callbacks, e.g. `_callback_dict.wandb.project=new-project`.
 
@@ -83,14 +83,14 @@ python run.py \
 
 ### HuggingFace Models
 
-#### InstructBLIP (w/ default JSON template)
+#### InstructBLIP (w/ non-JSON continuation template)
 
 ```bash
 python run.py \
   model="instructblip" \
-  model.json_mode=true \
+  model.json_mode=false \
   dataset.path=data/xm3600_images \
-  dataset.template_name=default_json
+  dataset.template_name=continuation
 ```
 
 #### LLaVa-1.6 (w/ culture template and wandb logging)
