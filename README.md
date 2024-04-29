@@ -99,7 +99,9 @@ python run.py \
 
 > [!NOTE]
 > Currently available options are `model="blip2"`, `model="instructblip"`, `model="llava"`, and `model="idefics2"`
+>
 > You can also specify the size, e.g. `model.size=34b` for Llava
+>
 > Make sure to use a prompt template that works for the model (uses the correct special tokens, etc.)
 
 
