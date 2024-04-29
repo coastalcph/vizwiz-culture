@@ -2,11 +2,18 @@ from hydra.core.config_store import ConfigStore
 from omegaconf import II
 
 from ..utils.misc import is_flashattn_2_supported
-from .callbacks import (LoggingCallbackConfig, SaveToCsvCallbackConfig,
-                        WandbCallbackConfig)
+from .callbacks import LoggingCallbackConfig, SaveToCsvCallbackConfig, WandbCallbackConfig
 from .dataset import DatasetConfig
-from .models import (ApiType, GoogleModelConfig, HfModel, HfModelConfig,
-                     HfProcessor, ModelConfig, OpenaiModelConfig)
+from .models import (
+    AnthropicModelConfig,
+    ApiType,
+    GoogleModelConfig,
+    HfModel,
+    HfModelConfig,
+    HfProcessor,
+    ModelConfig,
+    OpenaiModelConfig,
+)
 
 cs = ConfigStore.instance()
 
@@ -23,24 +30,41 @@ cs.store(group="model", name="base_model", node=ModelConfig)
 cs.store(
     group="model",
     name="gpt-4",
-    node=OpenaiModelConfig(api_type=ApiType.OPENAI, name="gpt-4-vision-preview"),
+    node=OpenaiModelConfig(name="gpt-4-vision-preview"),
 )
 cs.store(
     group="model",
     name="gpt-4-turbo",
-    node=OpenaiModelConfig(api_type=ApiType.OPENAI, name="gpt-4-turbo-2024-04-09"),
+    node=OpenaiModelConfig(name="gpt-4-turbo-2024-04-09"),
 )
 
 # Google models
 cs.store(
     group="model",
     name="gemini-1.0",
-    node=GoogleModelConfig(api_type=ApiType.GOOGLE, name="gemini-1.0-pro-vision"),
+    node=GoogleModelConfig(name="gemini-1.0-pro-vision"),
 )
 cs.store(
     group="model",
     name="gemini-1.5",
-    node=GoogleModelConfig(api_type=ApiType.GOOGLE, name="gemini-1.5-pro-preview-0409"),
+    node=GoogleModelConfig(name="gemini-1.5-pro-preview-0409"),
+)
+
+# Anthropic models
+cs.store(
+    group="model",
+    name="claude-haiku",
+    node=AnthropicModelConfig(name="claude-3-haiku-20240307"),
+)
+cs.store(
+    group="model",
+    name="claude-sonnet",
+    node=AnthropicModelConfig(name="claude-3-sonnet-20240229"),
+)
+cs.store(
+    group="model",
+    name="claude-opus",
+    node=AnthropicModelConfig(name="claude-3-opus-20240229"),
 )
 
 # HuggingFace models

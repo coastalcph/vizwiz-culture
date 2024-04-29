@@ -80,6 +80,20 @@ python run.py \
   dataset.template_name=culture_json
 ```
 
+### Claude
+
+> [!NOTE]
+> Available options are `model="claude-haiku"`, `model="claude-sonnet"`, or `model="claude-opus"`.
+
+```bash
+python run.py \
+  model="claude-sonnet" \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=culture_json
+```
+
 
 ### HuggingFace Models
 

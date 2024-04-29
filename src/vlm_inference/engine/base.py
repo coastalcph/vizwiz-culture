@@ -133,5 +133,9 @@ def create_engine(config: ModelConfig) -> BaseEngine:
         from .google import GoogleEngine
 
         return GoogleEngine(config)
+    elif config.api_type == ApiType.ANTHROPIC:
+        from .anthropic import AnthropicEngine
+
+        return AnthropicEngine(config)
     else:
         raise ValueError(f"Unsupported API type: {config.api_type}")

@@ -9,6 +9,7 @@ class ApiType(Enum):
     HF = "hf"
     OPENAI = "openai"
     GOOGLE = "google"
+    ANTHROPIC = "anthropic"
 
 
 @dataclass
@@ -36,6 +37,20 @@ class GoogleModelConfig(ModelConfig):
 @dataclass
 class OpenaiModelConfig(ModelConfig):
     api_type: ApiType = ApiType.OPENAI
+    name: str = MISSING
+    generation_kwargs: Dict[str, Any] = field(
+        default_factory=lambda: {
+            "max_tokens": 300,
+            "temperature": 1.0,
+            "max_retries": 50,
+            "sleep_duration": 2,
+        }
+    )
+
+
+@dataclass
+class AnthropicModelConfig(ModelConfig):
+    api_type: ApiType = ApiType.ANTHROPIC
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
