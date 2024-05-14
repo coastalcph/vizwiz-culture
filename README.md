@@ -18,13 +18,15 @@ pip install flash-attn --no-build-isolation
 python -c "import torch; import flash_attn_2_cuda"
 ```
 
-## OpenAI Setup
+## Closed-access models API setup
+
+### OpenAI
 
 1. Login, setup billing, and create API key on [https://platform.openai.com/](https://platform.openai.com/)
 
 2. Run `export OPENAI_API_KEY=<your_key>`
 
-## Google/Gemini Setup
+### Google VertexAI
 
 1. Login, setup billing, and create project on [https://console.cloud.google.com/](https://console.cloud.google.com/)
 
@@ -36,7 +38,7 @@ python -c "import torch; import flash_attn_2_cuda"
 
 4. Run `export GOOGLE_CLOUD_PROJECT=<your_project>`
 
-## Anthropic Setup
+### Anthropic
 
 1. Login, setup billing, and create API key on [https://console.anthropic.com/](https://console.anthropic.com/).
 
@@ -46,7 +48,7 @@ python -c "import torch; import flash_attn_2_cuda"
 
 ### General Usage
 
-### Registering models
+#### Registering models
 
 You can register new models, datasets, and callbacks by adding them under [src/vlm_inference/configuration/registry.py](src/vlm_inference/configuration/registry.py). We currently support the Google Gemini API, the OpenAI API and HuggingFace.
 
@@ -58,80 +60,76 @@ You can get rid of default callbacks via `'~_callback_dict.<callback_name>'`, e.
 
 You can also easily override values of the callbacks, e.g. `_callback_dict.wandb.project=new-project`.
 
-### Closed-access models
+#### Closed-access models
 
 > [!NOTE]
-> Currently available **OpenAI** models are:
->
-> `gpt-4o` (gpt-4o-2024-05-13)
->
-> `gpt-4-turbo` (gpt-4-turbo-2024-04-09)
->
-> `gpt-4` (gpt-4-1106-vision-preview)
+> Currently available **OpenAI** models:
+> - `gpt-4o` (gpt-4o-2024-05-13)
+> - `gpt-4-turbo` (gpt-4-turbo-2024-04-09)
+> - `gpt-4` (gpt-4-1106-vision-preview)
+>   
+> Currently available **Google** models:
+> - `gemini-1.0` (gemini-1.0-pro-vision-001)
+> - `gemini-1.5` (gemini-1.5-pro-preview-0409)
 > 
->
-> Currently available **Google** models are:
->
-> `gemini-1.0` (gemini-1.0-pro-vision-001)
->
-> `gemini-1.5` (gemini-1.5-pro-preview-0409)
->
->
-> Currently available **Anthropic** models are:
->
-> `claude-haiku` (claude-3-haiku-20240307)
->
-> `claude-sonnet` (claude-3-sonnet-20240229)
->
-> `claude-opus` (claude-3-opus-20240229)
+> Currently available **Anthropic** models:
+> - `claude-haiku` (claude-3-haiku-20240307)
+> - `claude-sonnet` (claude-3-sonnet-20240229)
+> - `claude-opus` (claude-3-opus-20240229)
 
 
-Example: 
+#### Example
 ```bash
 python run.py \
-  model="gpt-4o" \
+  model=gpt-4o \
   model.json_mode=true \
   dataset=cultural_captioning \
   dataset.path=data/xm3600_images \
   dataset.template_name=culture_json
 ```
 
-### Open-access models via HuggingFace
+#### Open-access models via HuggingFace
 
 > [!NOTE]
-> Currently available options are `model="blip2"`, `model="instructblip"`, `model="llava"`, and `model="idefics2"`
+> Currently available models:
+> - `blip2`
+> - `instructblip`
+> - `llava` (v1.6)
+> - `idefics2`
 >
-> You can also specify the size, e.g. `model.size=34b` for Llava
+> You can also specify the size, e.g. `model.size=34b` for Llava.
 >
-> Make sure to use a prompt template that works for the model (uses the correct special tokens, etc.)
+> Make sure to use a prompt template that works for the model (uses the correct special tokens, etc.).
 
 
-#### InstructBLIP (w/ non-JSON continuation template and regular captioning)
+#### Examples
+
+##### InstructBLIP (w/ non-JSON continuation template and regular captioning)
 
 ```bash
 python run.py \
-  model="instructblip" \
+  model=instructblip \
   model.json_mode=false \
   dataset.path=data/xm3600_images \
   dataset.template_name=continuation
 ```
 
-#### LLaVa-1.6 (w/ JSON culture template and cultural captioning)
+##### LLaVa-1.6 (w/ JSON culture template and cultural captioning)
 
 ```bash
 python run.py \
-  model="llava" \
+  model=llava \
   model.json_mode=true \
   dataset=cultural_captioning \
   dataset.path=data/xm3600_images \
   dataset.template_name=llava7b_culture_json
 ```
 
-#### Idefics2
+##### Idefics2
 
 ```bash
 python run.py \
-  model="idefics2" \
+  model=idefics2 \
   model.json_mode=true \
   dataset=cultural_captioning \
   dataset.path=data/xm3600_images \
