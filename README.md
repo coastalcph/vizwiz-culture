@@ -24,7 +24,7 @@ python -c "import torch; import flash_attn_2_cuda"
 
 2. Run `export OPENAI_API_KEY=<your_key>`
 
-## Gemini Setup
+## Google/Gemini Setup
 
 1. Login, setup billing, and create project on [https://console.cloud.google.com/](https://console.cloud.google.com/)
 
@@ -35,6 +35,12 @@ python -c "import torch; import flash_attn_2_cuda"
 3. Run `gcloud auth application-default login` and follow the instructions
 
 4. Run `export GOOGLE_CLOUD_PROJECT=<your_project>`
+
+## Anthropic Setup
+
+1. Login, setup billing, and create API key on [https://console.anthropic.com/](https://console.anthropic.com/).
+
+2. Run `export ANTHROPIC_API_KEY=<your_key>`.
 
 ## Examples
 
@@ -52,50 +58,45 @@ You can get rid of default callbacks via `'~_callback_dict.<callback_name>'`, e.
 
 You can also easily override values of the callbacks, e.g. `_callback_dict.wandb.project=new-project`.
 
-### GPT-4V
+### Closed-access models
 
 > [!NOTE]
-> Pass `model="gpt-4"` for GPT-4V (gpt-4-1106-vision-preview) and `model="gpt-4-turbo"` for GPT-4 Turbo with Vision (gpt-4-turbo-2024-04-09)
+> Currently available **OpenAI** models are:
+>
+> `gpt-4o` (gpt-4o-2024-05-13)
+>
+> `gpt-4-turbo` (gpt-4-turbo-2024-04-09)
+>
+> `gpt-4` (gpt-4-1106-vision-preview)
+> 
+>
+> Currently available **Google** models are:
+>
+> `gemini-1.0` (gemini-1.0-pro-vision-001)
+>
+> `gemini-1.5` (gemini-1.5-pro-preview-0409)
+>
+>
+> Currently available **Anthropic** models are:
+>
+> `claude-haiku` (claude-3-haiku-20240307)
+>
+> `claude-sonnet` (claude-3-sonnet-20240229)
+>
+> `claude-opus` (claude-3-opus-20240229)
 
+
+Example: 
 ```bash
 python run.py \
-  model="gpt-4-turbo" \
+  model="gpt-4o" \
   model.json_mode=true \
   dataset=cultural_captioning \
   dataset.path=data/xm3600_images \
   dataset.template_name=culture_json
 ```
 
-### Gemini
-
-> [!NOTE]
-> Pass `model="gemini-1.0"` for Gemini 1.0 Pro Vision and `model="gemini-1.5"` for Gemini 1.5 Pro
-
-```bash
-python run.py \
-  model="gemini-1.5" \
-  model.json_mode=true \
-  dataset=cultural_captioning \
-  dataset.path=data/xm3600_images \
-  dataset.template_name=culture_json
-```
-
-### Claude
-
-> [!NOTE]
-> Currently available options are `model="claude-haiku"`, `model="claude-sonnet"`, and `model="claude-opus"`
-
-```bash
-python run.py \
-  model="claude-sonnet" \
-  model.json_mode=true \
-  dataset=cultural_captioning \
-  dataset.path=data/xm3600_images \
-  dataset.template_name=culture_json
-```
-
-
-### HuggingFace Models
+### Open-access models via HuggingFace
 
 > [!NOTE]
 > Currently available options are `model="blip2"`, `model="instructblip"`, `model="llava"`, and `model="idefics2"`

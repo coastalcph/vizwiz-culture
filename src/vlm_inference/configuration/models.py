@@ -1,20 +1,19 @@
 from dataclasses import dataclass, field
-from enum import Enum
 from typing import Any, Dict
 
 from omegaconf import MISSING
 
 
-class ApiType(Enum):
-    HF = "hf"
-    OPENAI = "openai"
-    GOOGLE = "google"
-    ANTHROPIC = "anthropic"
+@dataclass
+class Pricing:
+    usd_per_input_unit: str
+    usd_per_output_unit: str
+    unit_tokens: str = "1000000"
 
 
 @dataclass
 class ModelConfig:
-    api_type: ApiType = MISSING
+    _target_: str = MISSING
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = MISSING
     json_mode: bool = False
@@ -22,7 +21,7 @@ class ModelConfig:
 
 @dataclass
 class GoogleModelConfig(ModelConfig):
-    api_type: ApiType = ApiType.GOOGLE
+    _target_: str = "vlm_inference.modeling.modeling_google.GoogleModel"
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
@@ -32,11 +31,12 @@ class GoogleModelConfig(ModelConfig):
             "sleep_duration": 2,
         }
     )
+    pricing: Pricing = MISSING
 
 
 @dataclass
 class OpenaiModelConfig(ModelConfig):
-    api_type: ApiType = ApiType.OPENAI
+    _target_: str = "vlm_inference.modeling.modeling_openai.OpenaiModel"
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
@@ -46,11 +46,12 @@ class OpenaiModelConfig(ModelConfig):
             "sleep_duration": 2,
         }
     )
+    pricing: Pricing = MISSING
 
 
 @dataclass
 class AnthropicModelConfig(ModelConfig):
-    api_type: ApiType = ApiType.ANTHROPIC
+    _target_: str = "vlm_inference.modeling.modeling_anthropic.AnthropicModel"
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
@@ -60,11 +61,13 @@ class AnthropicModelConfig(ModelConfig):
             "sleep_duration": 2,
         }
     )
+    pricing: Pricing = MISSING
 
 
 @dataclass
 class HfModel:
     _target_: str = MISSING
+    _partial_: bool = True
     low_cpu_mem_usage: bool = True
     attn_implementation: str = "eager"
 
@@ -72,12 +75,13 @@ class HfModel:
 @dataclass
 class HfProcessor:
     _target_: str = MISSING
+    _partial_: bool = True
     use_fast: bool = False
 
 
 @dataclass
 class HfModelConfig(ModelConfig):
-    api_type: ApiType = ApiType.HF
+    _target_: str = "vlm_inference.modeling.modeling_hf.HfModel"
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {

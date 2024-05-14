@@ -1,26 +1,28 @@
 from hydra.core.config_store import ConfigStore
 from omegaconf import II
 
-from ..utils.misc import is_flashattn_2_supported
-from .callbacks import LoggingCallbackConfig, SaveToCsvCallbackConfig, WandbCallbackConfig
+from ..utils import is_flashattn_2_supported
+from .callbacks import (CostLoggingCallbackConfig, LoggingCallbackConfig,
+                        SaveToCsvCallbackConfig, WandbCallbackConfig)
 from .dataset import DatasetConfig
-from .models import (
-    AnthropicModelConfig,
-    ApiType,
-    GoogleModelConfig,
-    HfModel,
-    HfModelConfig,
-    HfProcessor,
-    ModelConfig,
-    OpenaiModelConfig,
-)
+from .models import (AnthropicModelConfig, GoogleModelConfig, HfModel,
+                     HfModelConfig, HfProcessor, ModelConfig,
+                     OpenaiModelConfig, Pricing)
 
 cs = ConfigStore.instance()
 
 # Datasets
-cs.store(group="dataset", name="captioning", node=DatasetConfig(type="captioning"))
 cs.store(
-    group="dataset", name="cultural_captioning", node=DatasetConfig(type="cultural_captioning")
+    group="dataset",
+    name="captioning",
+    node=DatasetConfig(_target_="vlm_inference.dataset.dataset_captioning.ImageCaptioningDataset"),
+)
+cs.store(
+    group="dataset",
+    name="cultural_captioning",
+    node=DatasetConfig(
+        _target_="vlm_inference.dataset.dataset_captioning.CulturalImageCaptioningDataset"
+    ),
 )
 
 # Base Model
@@ -30,41 +32,70 @@ cs.store(group="model", name="base_model", node=ModelConfig)
 cs.store(
     group="model",
     name="gpt-4",
-    node=OpenaiModelConfig(name="gpt-4-vision-preview"),
+    node=OpenaiModelConfig(
+        name="gpt-4-vision-preview",
+        pricing=Pricing(usd_per_input_unit="10.00", usd_per_output_unit="30.00"),
+    ),
 )
 cs.store(
     group="model",
     name="gpt-4-turbo",
-    node=OpenaiModelConfig(name="gpt-4-turbo-2024-04-09"),
+    node=OpenaiModelConfig(
+        name="gpt-4-turbo-2024-04-09",
+        pricing=Pricing(usd_per_input_unit="10.00", usd_per_output_unit="30.00"),
+    ),
+)
+cs.store(
+    group="model",
+    name="gpt-4o",
+    node=OpenaiModelConfig(
+        name="gpt-4o",
+        pricing=Pricing(usd_per_input_unit="5.00", usd_per_output_unit="15.00"),
+    ),
 )
 
 # Google models
 cs.store(
     group="model",
     name="gemini-1.0",
-    node=GoogleModelConfig(name="gemini-1.0-pro-vision"),
+    node=GoogleModelConfig(
+        name="gemini-1.0-pro-vision-001",
+        pricing=Pricing(usd_per_input_unit="0.50", usd_per_output_unit="1.50"),
+    ),
 )
 cs.store(
     group="model",
     name="gemini-1.5",
-    node=GoogleModelConfig(name="gemini-1.5-pro-preview-0409"),
+    node=GoogleModelConfig(
+        name="gemini-1.5-pro-preview-0409",
+        pricing=Pricing(usd_per_input_unit="7.00", usd_per_output_unit="21.00"),
+    ),
 )
 
 # Anthropic models
 cs.store(
     group="model",
     name="claude-haiku",
-    node=AnthropicModelConfig(name="claude-3-haiku-20240307"),
+    node=AnthropicModelConfig(
+        name="claude-3-haiku-20240307",
+        pricing=Pricing(usd_per_input_unit="0.25", usd_per_output_unit="1.25"),
+    ),
 )
 cs.store(
     group="model",
     name="claude-sonnet",
-    node=AnthropicModelConfig(name="claude-3-sonnet-20240229"),
+    node=AnthropicModelConfig(
+        name="claude-3-sonnet-20240229",
+        pricing=Pricing(usd_per_input_unit="3.00", usd_per_output_unit="15.00"),
+    ),
 )
 cs.store(
     group="model",
     name="claude-opus",
-    node=AnthropicModelConfig(name="claude-3-opus-20240229"),
+    node=AnthropicModelConfig(
+        name="claude-3-opus-20240229",
+        pricing=Pricing(usd_per_input_unit="15.00", usd_per_output_unit="75.00"),
+    ),
 )
 
 # HuggingFace models
@@ -131,3 +162,4 @@ cs.store(
 cs.store(group="callbacks", name="logging", node=LoggingCallbackConfig)
 cs.store(group="callbacks", name="csv", node=SaveToCsvCallbackConfig)
 cs.store(group="callbacks", name="wandb", node=WandbCallbackConfig)
+cs.store(group="callbacks", name="cost_logging", node=CostLoggingCallbackConfig)

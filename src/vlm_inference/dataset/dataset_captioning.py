@@ -1,29 +1,23 @@
 import logging
-from dataclasses import dataclass
 from pathlib import Path
+from typing import Type
 
 import hydra
 from jinja2 import Template
-from pydantic import BaseModel, Field
+from pydantic import BaseModel as PydanticBaseModel
+from pydantic import Field
 
-from ..configuration.dataset import DatasetConfig
-from ..utils.json import parse_pydantic_schema
-from .base import BaseDataset, Example
+from ..utils import parse_pydantic_schema
+from .dataset_base import Dataset, ImageExample
 
 logger = logging.getLogger(__name__)
 
 
-@dataclass
-class ImageCaptioningExample(Example):
-    image_path: str
-    prompt: str
-
-
-class CaptionResponse(BaseModel):
+class CaptionResponse(PydanticBaseModel):
     caption: str = Field(description="Caption for the image")
 
 
-class CulturalCaptionResponse(BaseModel):
+class CulturalCaptionResponse(PydanticBaseModel):
     caption: str = Field(description="Caption for the image")
     is_cultural: bool = Field(description="true/false")
     justification: str = Field(
@@ -31,13 +25,13 @@ class CulturalCaptionResponse(BaseModel):
     )
 
 
-class ImageCaptioningDataset(BaseDataset):
+class ImageCaptioningDataset(Dataset):
     name = "image_captioning"
-    json_schema = CaptionResponse
+    json_schema: Type[PydanticBaseModel] = CaptionResponse
 
-    def __init__(self, config: DatasetConfig):
-        self._load_dataset(Path(config.path))
-        self._load_template(config.template_name)
+    def __init__(self, path: str, template_name: str):
+        self._load_dataset(Path(path))
+        self._load_template(template_name)
 
     def _load_dataset(self, data_dir: Path) -> None:
         if not data_dir.exists() and not data_dir.is_dir():
@@ -54,13 +48,16 @@ class ImageCaptioningDataset(BaseDataset):
     def get_prompt(self) -> str:
         return self.template.render(json_schema=parse_pydantic_schema(self.json_schema))
 
-    def __getitem__(self, index: int) -> ImageCaptioningExample:
+    def __getitem__(self, index: int) -> ImageExample:
         image_path = self.data[index]
         prompt = self.get_prompt()
 
-        return ImageCaptioningExample(image_path=image_path, prompt=prompt)
+        return ImageExample(image_path=image_path, prompt=prompt)
+
+    def __len__(self) -> int:
+        return len(self.data)
 
 
 class CulturalImageCaptioningDataset(ImageCaptioningDataset):
     name = "cultural_image_captioning"
-    json_schema = CulturalCaptionResponse
+    json_schema: Type[PydanticBaseModel] = CulturalCaptionResponse

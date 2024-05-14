@@ -2,7 +2,7 @@ import base64
 import datetime
 import logging
 
-import randomname
+import randomname  # type: ignore
 import torch
 from omegaconf import DictConfig, OmegaConf
 
@@ -61,7 +61,7 @@ def torch_dtype_from_str(dtype: str) -> torch.dtype:
 
 def is_flashattn_2_supported():
     try:
-        import flash_attn_2_cuda
+        import flash_attn_2_cuda  # type: ignore # noqa: F401
 
         return True
     except ImportError:

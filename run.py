@@ -8,9 +8,8 @@ from omegaconf import MISSING, DictConfig
 
 from vlm_inference.configuration import (BaseConfig, CallbackConfig,
                                          DatasetConfig, ModelConfig)
-from vlm_inference.dataset.base import create_dataset
-from vlm_inference.engine.base import create_engine
-from vlm_inference.utils.misc import setup_config, setup_logging
+from vlm_inference.engine import Engine
+from vlm_inference.utils import setup_config, setup_logging
 
 
 @dataclass
@@ -29,9 +28,13 @@ def main(config: DictConfig):
     setup_logging()
     setup_config(config)
 
-    dataset = create_dataset(config.dataset)
-    engine = create_engine(config.model)
-    engine.run(dataset, callbacks=[instantiate(c) for c in config.callbacks])
+    dataset = instantiate(config.dataset)
+    model = instantiate(config.model)
+
+    engine = Engine(
+        model=model, dataset=dataset, callbacks=[instantiate(c) for c in config.callbacks]
+    )
+    engine.run()
 
 
 if __name__ == "__main__":

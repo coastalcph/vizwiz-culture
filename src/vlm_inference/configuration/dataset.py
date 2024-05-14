@@ -5,6 +5,6 @@ from omegaconf import MISSING
 
 @dataclass
 class DatasetConfig:
-    type: str = MISSING
+    _target_: str = MISSING
     path: str = MISSING
     template_name: str = MISSING

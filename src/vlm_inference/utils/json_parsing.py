@@ -1,10 +1,10 @@
 import json
 import re
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Type
 
 from outlines.fsm.json_schema import build_regex_from_schema
 from outlines.integrations.utils import convert_json_schema_to_str
-from pydantic import BaseModel
+from pydantic import BaseModel as PydanticBaseModel
 
 
 def parse_json(text_response: str) -> Optional[Dict[str, Any]]:
@@ -52,12 +52,12 @@ def _extend_search(text, span):
     return text[start:end]
 
 
-def validate_json_with_schema(json_data: Dict[str, Any], schema: BaseModel) -> bool:
+def validate_json_with_schema(json_data: Dict[str, Any], schema: Type[PydanticBaseModel]) -> bool:
     regex = build_regex_from_schema(convert_json_schema_to_str(schema), whitespace_pattern=r" ?")
     return re.fullmatch(regex, json.dumps(json_data)) is not None
 
 
-def parse_pydantic_schema(pydantic_model: BaseModel):
+def parse_pydantic_schema(pydantic_model: Type[PydanticBaseModel]) -> str:
     simple_schema = {}
     raw_schema = pydantic_model.model_json_schema()
 

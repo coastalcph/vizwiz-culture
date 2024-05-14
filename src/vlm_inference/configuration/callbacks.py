@@ -7,6 +7,7 @@ from omegaconf import MISSING
 @dataclass
 class CallbackConfig:
     _target_: str = MISSING
+    _partial_: bool = True
 
 
 @dataclass
@@ -27,4 +28,10 @@ class WandbCallbackConfig(CallbackConfig):
     entity: Optional[str] = None
     run_name: Optional[str] = None
     table_name: str = "results"
+    log_every: int = 50
+
+
+@dataclass
+class CostLoggingCallbackConfig(CallbackConfig):
+    _target_: str = "vlm_inference.utils.callbacks.CostLoggingCallback"
     log_every: int = 50

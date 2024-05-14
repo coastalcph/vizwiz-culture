@@ -8,6 +8,8 @@ defaults:
   - callbacks@_callback_dict.logging: logging
   - callbacks@_callback_dict.csv: csv
   - callbacks@_callback_dict.wandb: wandb
+  - callbacks@_callback_dict.cost_logging: cost_logging
+  - _self_
 
 _callback_dict:
   csv:
