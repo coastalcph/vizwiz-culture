@@ -97,22 +97,23 @@ python run.py \
 > - `instructblip`
 > - `llava` (v1.6)
 > - `idefics2`
+> - `paligemma` (defaults to paligemma-3b-mix-448)
 >
-> You can also specify the size, e.g. `model.size=34b` for Llava.
+> You can also specify the size, e.g. `model.size=34b` for Llava or `model.size=3b-pt-896` for Pali-Gemma.
 >
 > Make sure to use a prompt template that works for the model (uses the correct special tokens, etc.).
 
 
 #### Examples
 
-##### InstructBLIP (w/ non-JSON continuation template and regular captioning)
+##### Pali-Gemma (w/ non-JSON template and regular captioning)
 
 ```bash
 python run.py \
-  model=instructblip \
+  model=paligemma \
   model.json_mode=false \
   dataset.path=data/xm3600_images \
-  dataset.template_name=continuation
+  dataset.template_name=paligemma_caption_en
 ```
 
 ##### LLaVa-1.6 (w/ JSON culture template and cultural captioning)

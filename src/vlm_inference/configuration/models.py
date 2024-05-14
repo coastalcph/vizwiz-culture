@@ -70,6 +70,7 @@ class HfModel:
     _partial_: bool = True
     low_cpu_mem_usage: bool = True
     attn_implementation: str = "eager"
+    revision: str = "main"
 
 
 @dataclass

@@ -179,6 +179,21 @@ cs.store(
     ),
 )
 
+cs.store(
+    group="model",
+    name="paligemma",
+    node=HfModelConfig(
+        name=f"google/paligemma-{II('model.size')}",
+        size="3b-mix-448",
+        dtype="bfloat16",
+        model_cls=HfModel(
+            _target_="transformers.PaliGemmaForConditionalGeneration.from_pretrained",
+            revision=II("model.dtype"),
+        ),
+        processor_cls=HfProcessor(_target_="transformers.AutoProcessor.from_pretrained"),
+        strip_prompt=True,
+    ),
+)
 
 # Callbacks
 cs.store(group="callbacks", name="logging", node=LoggingCallbackConfig)
