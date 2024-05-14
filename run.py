@@ -6,8 +6,7 @@ from hydra.core.config_store import ConfigStore
 from hydra.utils import instantiate
 from omegaconf import MISSING, DictConfig
 
-from vlm_inference.configuration import (BaseConfig, CallbackConfig,
-                                         DatasetConfig, ModelConfig)
+from vlm_inference.configuration import BaseConfig, CallbackConfig, DatasetConfig, ModelConfig
 from vlm_inference.engine import Engine
 from vlm_inference.utils import setup_config, setup_logging
 
@@ -28,14 +27,11 @@ def main(config: DictConfig):
     setup_logging()
     setup_config(config)
 
-    dataset = instantiate(config.dataset)
-    model = instantiate(config.model)
-
-    engine = Engine(
-        model=model, dataset=dataset, callbacks=[instantiate(c) for c in config.callbacks]
-    )
-    engine.run()
-
+    Engine(
+        model=instantiate(config.model),
+        dataset=instantiate(config.dataset),
+        callbacks=[instantiate(c) for c in config.callbacks]
+    ).run()
 
 if __name__ == "__main__":
     main()
