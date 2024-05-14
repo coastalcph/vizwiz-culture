@@ -7,8 +7,8 @@ from PIL import Image
 from pydantic import BaseModel as PydanticBaseModel
 from transformers.feature_extraction_utils import BatchFeature
 
-from ..dataset import ImageExample
-from ..utils import torch_dtype_from_str
+from ..dataset.dataset_base import ImageExample
+from ..utils.misc import torch_dtype_from_str
 from ..utils.usage_tracking import UsageMetadata
 from .modeling_base import VisionLanguageModel
 

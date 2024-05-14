@@ -8,8 +8,8 @@ from typing import Optional, Union
 
 import wandb
 
-from ..dataset import Dataset
-from ..modeling import VisionLanguageModel
+from ..dataset.dataset_base import Dataset
+from ..modeling.modeling_base import VisionLanguageModel
 from .completion import Completion
 from .misc import get_random_name
 from .usage_tracking import CostSummary, UsageTracker

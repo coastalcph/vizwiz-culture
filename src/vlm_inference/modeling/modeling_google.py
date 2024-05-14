@@ -7,9 +7,9 @@ from pydantic import BaseModel as PydanticBaseModel
 from vertexai.preview.generative_models import (  # type: ignore
     GenerationConfig, GenerativeModel, Part)
 
-from ..configuration import Pricing
-from ..dataset import ImageExample
-from ..utils import read_image_as_bytes
+from ..configuration.models import Pricing
+from ..dataset.dataset_base import ImageExample
+from ..utils.misc import read_image_as_bytes
 from ..utils.usage_tracking import UsageMetadata
 from .modeling_base import VisionLanguageModel
 

@@ -5,9 +5,9 @@ from typing import Any, Dict, Optional, Tuple, Type
 from anthropic import Anthropic
 from pydantic import BaseModel as PydanticBaseModel
 
-from ..configuration import Pricing
-from ..dataset import ImageExample
-from ..utils import read_image_as_b64
+from ..configuration.models import Pricing
+from ..dataset.dataset_base import ImageExample
+from ..utils.misc import read_image_as_b64
 from ..utils.usage_tracking import UsageMetadata
 from .modeling_base import VisionLanguageModel
 

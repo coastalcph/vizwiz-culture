@@ -7,7 +7,7 @@ from jinja2 import Template
 from pydantic import BaseModel as PydanticBaseModel
 from pydantic import Field
 
-from ..utils import parse_pydantic_schema
+from ..utils.json_parsing import parse_pydantic_schema
 from .dataset_base import Dataset, ImageExample
 
 logger = logging.getLogger(__name__)

@@ -6,10 +6,12 @@ from typing import Callable, List, Type
 from pydantic import BaseModel as PydanticBaseModel
 from tqdm import tqdm
 
-from ..dataset import Dataset, ImageExample
-from ..modeling import VisionLanguageModel
-from ..utils import (Callback, JsonCompletion, StringCompletion, UsageTracker,
-                     parse_json, validate_json_with_schema)
+from ..dataset.dataset_base import Dataset, ImageExample
+from ..modeling.modeling_base import VisionLanguageModel
+from ..utils.callbacks import Callback
+from ..utils.completion import JsonCompletion, StringCompletion
+from ..utils.json_parsing import parse_json, validate_json_with_schema
+from ..utils.usage_tracking import UsageTracker
 
 logger = logging.getLogger(__name__)
 

@@ -21,7 +21,7 @@ class ModelConfig:
 
 @dataclass
 class GoogleModelConfig(ModelConfig):
-    _target_: str = "vlm_inference.modeling.modeling_google.GoogleModel"
+    _target_: str = "vlm_inference.GoogleModel"
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
@@ -36,7 +36,7 @@ class GoogleModelConfig(ModelConfig):
 
 @dataclass
 class OpenaiModelConfig(ModelConfig):
-    _target_: str = "vlm_inference.modeling.modeling_openai.OpenaiModel"
+    _target_: str = "vlm_inference.OpenaiModel"
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
@@ -51,7 +51,7 @@ class OpenaiModelConfig(ModelConfig):
 
 @dataclass
 class AnthropicModelConfig(ModelConfig):
-    _target_: str = "vlm_inference.modeling.modeling_anthropic.AnthropicModel"
+    _target_: str = "vlm_inference.AnthropicModel"
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {
@@ -81,7 +81,7 @@ class HfProcessor:
 
 @dataclass
 class HfModelConfig(ModelConfig):
-    _target_: str = "vlm_inference.modeling.modeling_hf.HfModel"
+    _target_: str = "vlm_inference.HfModel"
     name: str = MISSING
     generation_kwargs: Dict[str, Any] = field(
         default_factory=lambda: {

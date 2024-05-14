@@ -12,18 +12,18 @@ class CallbackConfig:
 
 @dataclass
 class SaveToCsvCallbackConfig(CallbackConfig):
-    _target_: str = "vlm_inference.utils.callbacks.SaveToCsvCallback"
+    _target_: str = "vlm_inference.SaveToCsvCallback"
     file_path: str = "output.csv"
 
 
 @dataclass
 class LoggingCallbackConfig(CallbackConfig):
-    _target_: str = "vlm_inference.utils.callbacks.LoggingCallback"
+    _target_: str = "vlm_inference.LoggingCallback"
 
 
 @dataclass
 class WandbCallbackConfig(CallbackConfig):
-    _target_: str = "vlm_inference.utils.callbacks.WandbCallback"
+    _target_: str = "vlm_inference.WandbCallback"
     project: Optional[str] = None
     entity: Optional[str] = None
     run_name: Optional[str] = None
@@ -33,5 +33,5 @@ class WandbCallbackConfig(CallbackConfig):
 
 @dataclass
 class CostLoggingCallbackConfig(CallbackConfig):
-    _target_: str = "vlm_inference.utils.callbacks.CostLoggingCallback"
+    _target_: str = "vlm_inference.CostLoggingCallback"
     log_every: int = 50

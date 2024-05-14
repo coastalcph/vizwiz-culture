@@ -1,28 +1,41 @@
 from hydra.core.config_store import ConfigStore
 from omegaconf import II
 
-from ..utils import is_flashattn_2_supported
-from .callbacks import (CostLoggingCallbackConfig, LoggingCallbackConfig,
-                        SaveToCsvCallbackConfig, WandbCallbackConfig)
+from ..utils.misc import is_flashattn_2_supported
+from .callbacks import (
+    CostLoggingCallbackConfig,
+    LoggingCallbackConfig,
+    SaveToCsvCallbackConfig,
+    WandbCallbackConfig,
+)
 from .dataset import DatasetConfig
-from .models import (AnthropicModelConfig, GoogleModelConfig, HfModel,
-                     HfModelConfig, HfProcessor, ModelConfig,
-                     OpenaiModelConfig, Pricing)
+from .models import (
+    AnthropicModelConfig,
+    GoogleModelConfig,
+    HfModel,
+    HfModelConfig,
+    HfProcessor,
+    ModelConfig,
+    OpenaiModelConfig,
+    Pricing,
+)
+from .run import RunConfig
 
 cs = ConfigStore.instance()
+
+# Base run
+cs.store(name="base_config", node=RunConfig)
 
 # Datasets
 cs.store(
     group="dataset",
     name="captioning",
-    node=DatasetConfig(_target_="vlm_inference.dataset.dataset_captioning.ImageCaptioningDataset"),
+    node=DatasetConfig(_target_="vlm_inference.ImageCaptioningDataset"),
 )
 cs.store(
     group="dataset",
     name="cultural_captioning",
-    node=DatasetConfig(
-        _target_="vlm_inference.dataset.dataset_captioning.CulturalImageCaptioningDataset"
-    ),
+    node=DatasetConfig(_target_="vlm_inference.CulturalImageCaptioningDataset"),
 )
 
 # Base Model

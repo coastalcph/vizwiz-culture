@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Tuple, Type
 
 from pydantic import BaseModel as PydanticBaseModel
 
-from ..dataset import ImageExample
+from ..dataset.dataset_base import ImageExample
 from ..utils.usage_tracking import UsageMetadata
 
 logger = logging.getLogger(__name__)

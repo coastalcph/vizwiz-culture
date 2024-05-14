@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List
 
-from ..dataset import ImageExample
+from ..dataset.dataset_base import ImageExample
 
 
 @dataclass
