@@ -70,7 +70,8 @@ You can also easily override values of the callbacks, e.g. `_callback_dict.wandb
 >   
 > Currently available **Google** models:
 > - `gemini-1.0` (gemini-1.0-pro-vision-001)
-> - `gemini-1.5` (gemini-1.5-pro-preview-0409)
+> - `gemini-1.5-flash` (gemini-1.5-flash-preview-0514)
+> - `gemini-1.5-pro` (gemini-1.5-pro-preview-0514)
 > 
 > Currently available **Anthropic** models:
 > - `claude-haiku` (claude-3-haiku-20240307)
@@ -144,13 +145,13 @@ Pass `--multirun run=slurm` to run on SLURM.
 > You might need to adjust the Slurm parameters (see defaults in [configs/run/slurm.yaml](configs/run/slurm.yaml)).
 > To do so, either change them directly in the `slurm.yaml`, create a new `yaml` file, or pass them as hydra overrides, e.g. via `hydra.launcher.partition=gpu` or `hydra.launcher.gpus_per_node=0`.
 
-You can launch different configurations in parallel using comma-separated arguments, e.g. `model=gemini-1.0,gpt-4`.
+You can launch different configurations in parallel using comma-separated arguments, e.g. `model=gemini-1.5-flash,gpt-4o`.
 
 Example: 
 
 ```bash
 python run.py --multirun run=slurm \
-  model=gemini-1.0,gpt-4 \
+  model=gemini-1.5-flash,gpt-4o \
   model.json_mode=true \
   dataset=cultural_captioning \
   dataset.path=data/xm3600_images \

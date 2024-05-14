@@ -78,11 +78,20 @@ cs.store(
 )
 cs.store(
     group="model",
-    name="gemini-1.5",
+    name="gemini-1.5-pro",
     node=GoogleModelConfig(
-        name="gemini-1.5-pro-preview-0409",
-        pricing=Pricing(usd_per_input_unit="7.00", usd_per_output_unit="21.00"),
+        name="gemini-1.5-pro-preview-0514",
+        pricing=Pricing(usd_per_input_unit="3.50", usd_per_output_unit="10.50"),
     ),
+)
+cs.store(
+    group="model",
+    name="gemini-1.5-flash",
+    node=GoogleModelConfig(
+        name="gemini-1.5-flash-preview-0514",
+        pricing=Pricing(usd_per_input_unit="0.35", usd_per_output_unit="0.53"),
+    ),
+
 )
 
 # Anthropic models
