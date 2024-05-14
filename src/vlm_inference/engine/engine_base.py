@@ -6,7 +6,7 @@ from typing import Callable, List, Type
 from pydantic import BaseModel as PydanticBaseModel
 from tqdm import tqdm
 
-from ..dataset.dataset_base import Dataset, ImageExample
+from ..dataset.dataset_base import ImageDataset, ImageExample
 from ..modeling.modeling_base import VisionLanguageModel
 from ..utils.callbacks import Callback
 from ..utils.completion import JsonCompletion, StringCompletion
@@ -20,17 +20,17 @@ class Engine:
     """Engine class for all models."""
 
     def __init__(
-        self, model: VisionLanguageModel, dataset: Dataset, callbacks: List[Callable] = []
+        self, model: VisionLanguageModel, dataset: ImageDataset, callbacks: List[Callable] = []
     ):
         self.model = model
         self.dataset = dataset
+        self.metadata_tracker = UsageTracker()
 
-        callback_kwargs = dict(model=model, dataset=dataset, usage_tracker=UsageTracker())
+        callback_kwargs = dict(model=model, dataset=dataset, usage_tracker=self.metadata_tracker)
         self.callbacks: List[Callback] = [
             callback_cls(**callback_kwargs) for callback_cls in callbacks
         ]
 
-        self.metadata_tracker = UsageTracker()
 
     def json_step(
         self, example: ImageExample, json_schema: Type[PydanticBaseModel]

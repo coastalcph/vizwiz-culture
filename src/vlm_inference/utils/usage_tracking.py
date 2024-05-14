@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from decimal import Decimal
+from typing import Dict
 
 
 @dataclass
@@ -16,6 +17,13 @@ class UsageTracker:
     def update(self, metadata: UsageMetadata):
         self.input_token_count += metadata.input_token_count
         self.output_token_count += metadata.output_token_count
+
+    def get_usage_dict(self) -> Dict[str, int]:
+        return {
+            "Usage/input_tokens": self.input_token_count,
+            "Usage/output_tokens": self.output_token_count,
+            "Usage/total_tokens": self.input_token_count + self.output_token_count,
+        }
 
 
 @dataclass

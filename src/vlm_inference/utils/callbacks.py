@@ -8,7 +8,7 @@ from typing import Optional, Union
 
 import wandb
 
-from ..dataset.dataset_base import Dataset
+from ..dataset.dataset_base import ImageDataset
 from ..modeling.modeling_base import VisionLanguageModel
 from .completion import Completion
 from .misc import get_random_name
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class Callback(ABC):
-    def __init__(self, model: VisionLanguageModel, dataset: Dataset, usage_tracker: UsageTracker):
+    def __init__(self, model: VisionLanguageModel, dataset: ImageDataset, usage_tracker: UsageTracker):
         self.model = model
         self.dataset = dataset
         self.usage_tracker = usage_tracker
@@ -102,10 +102,12 @@ class WandbCallback(Callback):
 
         if (step_index + 1) % self.log_every == 0:
             wandb.log({f"Tables/{self.table_name}": self.table})
+            wandb.log(self.usage_tracker.get_usage_dict(), step=step_index)
 
     def on_run_end(self):
         self.table = wandb.Table(columns=self.table.columns, data=self.table.data)
         wandb.log({f"Tables/{self.table_name}": self.table})
+        wandb.log(self.usage_tracker.get_usage_dict())
 
         self.run.finish()
 
