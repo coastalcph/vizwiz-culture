@@ -11,7 +11,7 @@ Please exclude generic or ubiquitous statements or observations that do not clea
 
 Given this image, do two things:
 1. Determine whether the provided example contains cultural information.
-2. Generate a caption that simply describes the photo and includes the cultural information extracted.
+2. Write a caption that describes the photo and includes the cultural information extracted.
 
 Format your response in JSON as follows:
 {{ json_schema }}
