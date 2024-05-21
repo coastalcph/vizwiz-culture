@@ -1,4 +1,11 @@
+# VLM Inference
 
+This codebase runs image-text inference with SOTA vision-language models. It is designed to be easily extensible to new models, datasets, and tasks. We support structured JSON generation via outlines and pydantic, using schema-constrained decoding for HuggingFace models and JSON mode with API-based models wherever applicable.
+
+To be added:
+- video inference
+- async generation as fast as rate limits permit
+- context caching as it becomes available in APIs
 
 ## Installation
 
