@@ -93,14 +93,14 @@ python run.py \
 
 > [!NOTE]
 > Currently available models:
-> - `blip2`
-> - `instructblip`
-> - `llava` (v1.6)
-> - `idefics2`
-> - `paligemma` (defaults to paligemma-3b-mix-448)
-> - `phi3-vision`
+> - `blip2` (defaults to [Salesforce/blip2-opt-6.7b](https://huggingface.co/Salesforce/blip2-opt-6.7b))
+> - `instructblip` (defaults to [Salesforce/instructblip-vicuna-7b](https://huggingface.co/Salesforce/instructblip-vicuna-7b))
+> - `llava` (defaults to [llava-hf/llava-v1.6-mistral-7b-hf](https://huggingface.co/llava-hf/llava-v1.6-mistral-7b-hf))
+> - `idefics2` (defaults to [HuggingFaceM4/idefics2-8b](https://huggingface.co/HuggingFaceM4/idefics2-8b))
+> - `paligemma` (defaults to [google/paligemma-3b-mix-448](https://huggingface.co/google/paligemma-3b-mix-448))
+> - `phi3-vision` (defaults to [microsoft/Phi-3-vision-128k-instruct](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct))
 >
-> You can also specify the size, e.g. `model.size=34b` for Llava or `model.size=3b-pt-896` for PaliGemma.
+> You can also specify the size, e.g. `model.size=13b` for InstructBlip, `model.size=34b` for Llava or `model.size=3b-pt-896` for PaliGemma.
 >
 > Make sure to use a prompt template that works for the model (uses the correct special tokens, etc.).
 
