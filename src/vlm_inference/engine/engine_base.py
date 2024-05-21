@@ -102,3 +102,8 @@ class Engine:
 
         for callback in self.callbacks:
             callback.on_run_end()
+
+
+def run_engine(model: VisionLanguageModel, dataset: ImageDataset, callbacks: List[Callback] = []):
+    engine = Engine(model=model, dataset=dataset, callbacks=callbacks)
+    engine.run()

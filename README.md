@@ -98,15 +98,16 @@ python run.py \
 > - `llava` (v1.6)
 > - `idefics2`
 > - `paligemma` (defaults to paligemma-3b-mix-448)
+> - `phi3-vision`
 >
-> You can also specify the size, e.g. `model.size=34b` for Llava or `model.size=3b-pt-896` for Pali-Gemma.
+> You can also specify the size, e.g. `model.size=34b` for Llava or `model.size=3b-pt-896` for PaliGemma.
 >
 > Make sure to use a prompt template that works for the model (uses the correct special tokens, etc.).
 
 
 #### Examples
 
-##### Pali-Gemma (w/ non-JSON template and regular captioning)
+##### PaliGemma (w/ non-JSON template and regular captioning)
 
 ```bash
 python run.py \
@@ -136,6 +137,17 @@ python run.py \
   dataset=cultural_captioning \
   dataset.path=data/xm3600_images \
   dataset.template_name=idefics2_culture_json
+```
+
+##### Phi3-vision
+
+```bash
+python run.py \
+  model=phi3-vision \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=phi3_culture_json
 ```
 
 ### Running on SLURM

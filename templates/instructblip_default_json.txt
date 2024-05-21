@@ -1,0 +1,5 @@
+<image>
+Write a caption that describes this photo.
+
+Format your response in JSON as follows:
+{{ json_schema }}

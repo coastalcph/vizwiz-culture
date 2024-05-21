@@ -7,7 +7,7 @@ from vlm_inference.dataset import (  # noqa: F401
     ImageCaptioningDataset,
     ImageDataset,
 )
-from vlm_inference.engine import Engine  # noqa: F401
+from vlm_inference.engine import Engine, run_engine  # noqa: F401
 from vlm_inference.modeling import GoogleModel  # noqa: F401
 from vlm_inference.modeling import (  # noqa: F401
     AnthropicModel,

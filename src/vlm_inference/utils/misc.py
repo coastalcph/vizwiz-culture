@@ -59,11 +59,17 @@ def torch_dtype_from_str(dtype: str) -> torch.dtype:
     return DTYPE_MAP[dtype]
 
 
-def is_flashattn_2_supported():
+def is_flashattn_2_supported(device_id: int = 0):
     try:
         import flash_attn_2_cuda  # type: ignore # noqa: F401
 
-        return True
+        major, minor = torch.cuda.get_device_capability(device_id)
+    
+        # Check if the GPU architecture is Ampere (SM 8.x) or newer (SM 9.0)
+        is_sm8x = major == 8 and minor >= 0
+        is_sm90 = major == 9 and minor == 0
+
+        return is_sm8x or is_sm90
     except ImportError:
         logger.info("flash_attn_2_cuda not found. Disabling Flash Attention 2 support.")
         return False

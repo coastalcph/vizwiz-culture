@@ -71,6 +71,7 @@ class HfModel:
     low_cpu_mem_usage: bool = True
     attn_implementation: str = "eager"
     revision: str = "main"
+    trust_remote_code: bool = True
 
 
 @dataclass
@@ -78,6 +79,7 @@ class HfProcessor:
     _target_: str = MISSING
     _partial_: bool = True
     use_fast: bool = False
+    trust_remote_code: bool = True
 
 
 @dataclass

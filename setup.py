@@ -24,6 +24,7 @@ setup(
         "randomname",
         "sentencepiece",
         "torch",
+        "torchvision",
         "transformers",
         "vertexai",
         "wandb",

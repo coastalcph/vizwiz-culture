@@ -1,13 +1,15 @@
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 from ..dataset.dataset_base import ImageExample
 
+StringResponse = str
+JsonResponse = Dict[str, Any]
 
 @dataclass
 class Completion:
     example: ImageExample
-    response: Any
+    response: Union[StringResponse, JsonResponse]
 
     def values_as_list(self) -> List[Any]:
         example_values = list(self.example.__dict__.values())
@@ -28,9 +30,9 @@ class Completion:
 
 @dataclass
 class StringCompletion(Completion):
-    response: str
+    response: StringResponse
 
 
 @dataclass
 class JsonCompletion(Completion):
-    response: Dict[str, Any]
+    response: JsonResponse

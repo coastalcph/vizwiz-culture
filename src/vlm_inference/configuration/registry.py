@@ -195,6 +195,22 @@ cs.store(
     ),
 )
 
+cs.store(
+    group="model",
+    name="phi3-vision",
+    node=HfModelConfig(
+        name="microsoft/Phi-3-vision-128k-instruct",
+        size="", # not used
+        dtype="bfloat16",
+        model_cls=HfModel(
+            _target_="transformers.AutoModelForCausalLM.from_pretrained",
+            attn_implementation="flash_attention_2" if is_flashattn_2_supported() else "sdpa",
+        ),
+        processor_cls=HfProcessor(_target_="transformers.AutoProcessor.from_pretrained", use_fast=True),
+        strip_prompt=True,
+    ),
+)
+
 # Callbacks
 cs.store(group="callbacks", name="logging", node=LoggingCallbackConfig)
 cs.store(group="callbacks", name="csv", node=SaveToCsvCallbackConfig)
