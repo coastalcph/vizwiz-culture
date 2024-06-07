@@ -51,6 +51,12 @@ python -c "import torch; import flash_attn_2_cuda"
 
 2. Run `export ANTHROPIC_API_KEY=<your_key>`.
 
+### Reka
+
+1. Login, setup billing, and create API key on [https://platform.reka.ai/](https://platform.reka.ai/).
+
+2. Run `export REKA_API_KEY=<your_key>`.
+
 ## Examples
 
 ### General Usage
@@ -84,7 +90,11 @@ You can also easily override values of the callbacks, e.g. `_callback_dict.wandb
 > - `claude-haiku` (claude-3-haiku-20240307)
 > - `claude-sonnet` (claude-3-sonnet-20240229)
 > - `claude-opus` (claude-3-opus-20240229)
-
+>
+> Currently available **Reka** models:
+> - `reka-edge` (reka-edge-20240208)
+> - `reka-flash` (reka-flash-20240226)
+> - `reka-core` (reka-core-20240415)
 
 #### Example
 ```bash
@@ -106,6 +116,8 @@ python run.py \
 > - `idefics2` (defaults to [HuggingFaceM4/idefics2-8b](https://huggingface.co/HuggingFaceM4/idefics2-8b))
 > - `paligemma` (defaults to [google/paligemma-3b-mix-448](https://huggingface.co/google/paligemma-3b-mix-448))
 > - `phi3-vision` (defaults to [microsoft/Phi-3-vision-128k-instruct](https://huggingface.co/microsoft/Phi-3-vision-128k-instruct))
+> - `minicpm-llama3-v2.5` (defaults to [openbmb/MiniCPM-Llama3-V-2_5](https://huggingface.co/openbmb/MiniCPM-Llama3-V-2_5))
+> - `glm-4v` (defaults to [THUDM/glm-4v-9b](https://huggingface.co/THUDM/glm-4v-9b))
 >
 > You can also specify the size, e.g. `model.size=13b` for InstructBlip, `model.size=34b` for Llava or `model.size=3b-pt-896` for PaliGemma.
 >
@@ -156,6 +168,29 @@ python run.py \
   dataset.path=data/xm3600_images \
   dataset.template_name=phi3_culture_json
 ```
+
+##### MiniCPM-Llama3-V-2.5
+
+```bash
+python run.py \
+  model=minicpm-llama3-v2.5 \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=culture_json
+```
+
+##### GLM-4V-9B
+
+```bash
+python run.py \
+  model=glm-4v \
+  model.json_mode=true \
+  dataset=cultural_captioning \
+  dataset.path=data/xm3600_images \
+  dataset.template_name=culture_json
+```
+
 
 ### Running on SLURM
 

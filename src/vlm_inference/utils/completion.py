@@ -6,6 +6,7 @@ from ..dataset.dataset_base import ImageExample
 StringResponse = str
 JsonResponse = Dict[str, Any]
 
+
 @dataclass
 class Completion:
     example: ImageExample

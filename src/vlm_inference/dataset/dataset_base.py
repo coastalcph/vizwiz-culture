@@ -50,4 +50,4 @@ class ImageDataset:
         return ImageExample(image_path=image_path, prompt=prompt)
 
     def __len__(self) -> int:
-        return len(self.data)   
+        return len(self.data)

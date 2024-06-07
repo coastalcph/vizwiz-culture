@@ -31,7 +31,6 @@ class Engine:
             callback_cls(**callback_kwargs) for callback_cls in callbacks
         ]
 
-
     def json_step(
         self, example: ImageExample, json_schema: Type[PydanticBaseModel]
     ) -> JsonCompletion:

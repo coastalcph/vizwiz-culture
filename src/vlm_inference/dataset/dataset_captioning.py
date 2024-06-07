@@ -9,9 +9,11 @@ from .dataset_base import ImageDataset
 class CaptionResponse(PydanticBaseModel):
     caption: str = Field(description="Caption for the image")
 
+
 class ImageCaptioningDataset(ImageDataset):
     name = "image_captioning"
     json_schema: Type[PydanticBaseModel] = CaptionResponse
+
 
 class CulturalCaptionResponse(PydanticBaseModel):
     caption: str = Field(description="Caption for the image")
@@ -19,6 +21,7 @@ class CulturalCaptionResponse(PydanticBaseModel):
     justification: str = Field(
         description="Why or why not the image contains cultural information"
     )
+
 
 class CulturalImageCaptioningDataset(ImageCaptioningDataset):
     name = "cultural_image_captioning"

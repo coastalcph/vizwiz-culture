@@ -40,13 +40,6 @@ class HfModel(VisionLanguageModel):
         self.processor = processor_cls(pretrained_model_name_or_path=self.name)
         self.strip_prompt = strip_prompt
 
-    def _extract_features(self, example: ImageExample) -> BatchFeature:
-        return self.processor(
-            images=Image.open(example.image_path).convert("RGB"),
-            text=example.prompt,
-            return_tensors="pt",
-        ).to(self.model.device, dtype=self.model.dtype)
-
     def generate(
         self, example: ImageExample, json_schema: Optional[Type[PydanticBaseModel]] = None
     ) -> Tuple[str, UsageMetadata]:

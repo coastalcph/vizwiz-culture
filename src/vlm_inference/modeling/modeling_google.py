@@ -5,12 +5,7 @@ from typing import Any, Dict, Optional, Tuple, Type
 import vertexai  # type: ignore
 from pydantic import BaseModel as PydanticBaseModel
 from vertexai.preview.generative_models import (  # type: ignore
-    GenerationConfig,
-    GenerativeModel,
-    HarmBlockThreshold,
-    HarmCategory,
-    Part,
-)
+    GenerationConfig, GenerativeModel, HarmBlockThreshold, HarmCategory, Part)
 
 from ..configuration.models import Pricing
 from ..dataset.dataset_base import ImageExample
@@ -49,7 +44,7 @@ class GoogleModel(VisionLanguageModel):
         response = self.model.generate_content(
             [img, example.prompt],
             generation_config=self.generation_config,
-            safety_settings={k: HarmBlockThreshold.BLOCK_ONLY_HIGH for k in HarmCategory}
+            safety_settings={k: HarmBlockThreshold.BLOCK_ONLY_HIGH for k in HarmCategory},
         )
         generated_text = response.text
         usage_metadata = UsageMetadata(

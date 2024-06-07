@@ -65,6 +65,21 @@ class AnthropicModelConfig(ModelConfig):
 
 
 @dataclass
+class RekaModelConfig(ModelConfig):
+    _target_: str = "vlm_inference.RekaModel"
+    name: str = MISSING
+    generation_kwargs: Dict[str, Any] = field(
+        default_factory=lambda: {
+            "max_tokens": 300,
+            "temperature": 0.5,
+            "max_retries": 50,
+            "sleep_duration": 2,
+        }
+    )
+    pricing: Pricing = MISSING
+
+
+@dataclass
 class HfModel:
     _target_: str = MISSING
     _partial_: bool = True

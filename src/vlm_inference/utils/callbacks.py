@@ -18,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 class Callback(ABC):
-    def __init__(self, model: VisionLanguageModel, dataset: ImageDataset, usage_tracker: UsageTracker):
+    def __init__(
+        self, model: VisionLanguageModel, dataset: ImageDataset, usage_tracker: UsageTracker
+    ):
         self.model = model
         self.dataset = dataset
         self.usage_tracker = usage_tracker
