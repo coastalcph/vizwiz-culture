@@ -218,7 +218,7 @@ cs.store(
         dtype="bfloat16",
         model_cls=HfModel(
             _target_="transformers.AutoModelForCausalLM.from_pretrained",
-            attn_implementation="flash_attention_2" if is_flashattn_2_supported() else "sdpa",
+            attn_implementation="flash_attention_2" if is_flashattn_2_supported() else "eager",
         ),
         processor_cls=HfProcessor(
             _target_="transformers.AutoProcessor.from_pretrained", use_fast=True
