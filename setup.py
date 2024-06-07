@@ -22,6 +22,7 @@ setup(
         "pillow",
         "pydantic",
         "randomname",
+        "reka-api>=2.0.0",
         "sentencepiece",
         "torch",
         "torchvision",
