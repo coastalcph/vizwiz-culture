@@ -1,7 +1,9 @@
 from typing import List, Optional, Union
 
-from transformers import (AutoTokenizer, BatchEncoding, ProcessorMixin,
-                          TensorType)
+from transformers import AutoTokenizer, BatchEncoding, ProcessorMixin, TensorType
+from transformers.image_utils import ImageInput
+from transformers.tokenization_utils_base import PreTokenizedInput, TextInput, TruncationStrategy
+from transformers.utils import PaddingStrategy
 
 
 class ChatGLMProcessor(ProcessorMixin):
@@ -13,11 +15,11 @@ class ChatGLMProcessor(ProcessorMixin):
     def __call__(
         self,
         text: Union[
-            "TextInput", "PreTokenizedInput", List["TextInput"], List["PreTokenizedInput"]
+            TextInput, PreTokenizedInput, List[TextInput], List[PreTokenizedInput]
         ],
-        images: "ImageInput" = None,
-        padding: Union[bool, str, "PaddingStrategy"] = False,
-        truncation: Union[bool, str, "TruncationStrategy"] = None,
+        images: Optional[ImageInput] = None,
+        padding: Union[bool, str, PaddingStrategy] = False,
+        truncation: Union[bool, str, TruncationStrategy] = None,
         max_length: Optional[int] = None,
         do_pad: Optional[bool] = True,
         return_tensors: Optional[Union[str, TensorType]] = TensorType.PYTORCH,
