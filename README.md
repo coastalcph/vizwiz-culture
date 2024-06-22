@@ -90,6 +90,7 @@ You can also easily override values of the callbacks, e.g. `_callback_dict.wandb
 > - `claude-haiku` (claude-3-haiku-20240307)
 > - `claude-sonnet` (claude-3-sonnet-20240229)
 > - `claude-opus` (claude-3-opus-20240229)
+> - `claude-3.5-sonnet` (claude-3-5-sonnet-20240620)
 >
 > Currently available **Reka** models:
 > - `reka-edge` (reka-edge-20240208)

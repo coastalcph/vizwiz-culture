@@ -107,6 +107,14 @@ cs.store(
         pricing=Pricing(usd_per_input_unit="15.00", usd_per_output_unit="75.00"),
     ),
 )
+cs.store(
+    group="model",
+    name="claude-3.5-sonnet",
+    node=AnthropicModelConfig(
+        name="claude-3-5-sonnet-20240620",
+        pricing=Pricing(usd_per_input_unit="3.00", usd_per_output_unit="15.00"),
+    ),
+)
 
 # Reka models
 cs.store(
