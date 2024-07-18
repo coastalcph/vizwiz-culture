@@ -51,8 +51,16 @@ cs.store(
     group="model",
     name="gpt-4o",
     node=OpenaiModelConfig(
-        name="gpt-4o",
+        name="gpt-4o-2024-05-13",
         pricing=Pricing(usd_per_input_unit="5.00", usd_per_output_unit="15.00"),
+    ),
+)
+cs.store(
+    group="model",
+    name="gpt-4o-mini",
+    node=OpenaiModelConfig(
+        name="gpt-4o-mini-2024-07-18",
+        pricing=Pricing(usd_per_input_unit="0.15", usd_per_output_unit="0.60"),
     ),
 )
 
