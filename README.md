@@ -78,6 +78,7 @@ You can also easily override values of the callbacks, e.g. `_callback_dict.wandb
 > [!NOTE]
 > Currently available **OpenAI** models:
 > - `gpt-4o` (gpt-4o-2024-05-13)
+> - `gpt-4o-mini` (gpt-4o-mini-2024-07-18)
 > - `gpt-4-turbo` (gpt-4-turbo-2024-04-09)
 > - `gpt-4` (gpt-4-1106-vision-preview)
 >   
